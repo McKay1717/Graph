@@ -70,10 +70,14 @@ def load(path):
     for k in range(1, len(tabStr)):
         node_lien = tabStr[k].split(":")
         for i in node_lien[1].split(","):
-
-            n = i[0]
+            nodePourLien = ''
+            k = 0
+            while i[k] != '(':
+                nodePourLien += i[k]
+                k += 1
+            n = nodePourLien
             value = ''
-            k = 2
+            k +=1
             while i[k] != ')':
                 value += i[k]
                 k += 1
@@ -112,4 +116,4 @@ def minimal(tab, chemin):
     return index
 
 
-displayGraph(load("Graph/test.txt"))
+displayGraph(load("Graph/JeuDeTest/test10.txt"))
