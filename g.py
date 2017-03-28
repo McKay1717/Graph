@@ -1,10 +1,10 @@
 #!/usr/bin/env python
+import itertools
 import matplotlib.pyplot as plt
 import networkx as nx
-from random import randrange
 from heapq import heappush, heappop
 from itertools import count
-
+from random import randrange
 
 
 def genRandomGraph(NodeNumber,NumberOfLink):
@@ -24,7 +24,7 @@ def genRandomGraph(NodeNumber,NumberOfLink):
     return G
 
 def displayGraph(G):
-    pos=nx.spring_layout(G)
+    pos = nx.circular_layout(G)
     nx.draw_networkx_nodes(G,pos,node_size=700)
     nx.draw_networkx_edges(G,pos,width=6)
     nx.draw_networkx_edge_labels(G,pos)
@@ -60,7 +60,30 @@ def dijtraAllG(G,weight='weight'):
         chemins[n] = dijtra(G, n,weight=weight)
     return chemins
 
-G = genRandomGraph(3,2)
-#displayGraph(G)
 
-print(dijtraAllG(G)[0][2])
+def TSV(G):
+    df = dijtraAllG(G)
+    ar = list(itertools.permutations(df, len(G.node)))
+    min = pow(10, 99)
+    id = 0
+    for item in ar:
+        l = list(item)
+        l.append(list(item)[0])
+        bad = False
+        sum = 0
+        for i in range(1, len(l)):
+            sum += df[l[i - 1]][l[i]]
+            if (sum > min):
+                bad = not bad
+                break
+        if (not bad and sum < min):
+            id = l
+            min = sum
+    print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
+
+
+G = genRandomGraph(11, 12)
+
+TSV(G)
+
+displayGraph(G)
