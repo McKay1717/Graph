@@ -61,14 +61,14 @@ def dijtraAllG(G,weight='weight'):
     return chemins
 
 
-def TSV(G,df):
-
-    ar = list(itertools.permutations(df, len(G.node)))
+def TSV(G, df, source):
+    l = list(G.node)
+    l.remove(source)
+    ar = list(itertools.permutations(l, len(l)))
     min = pow(10, 99)
     id = 0
     for item in ar:
         l = list(item)
-        l.append(list(item)[0])
         bad = False
         sum = 0
         for i in range(1, len(l)):
@@ -76,8 +76,12 @@ def TSV(G,df):
             if (sum > min):
                 bad = not bad
                 break
+        sum += df[source][0]
+        sum += df[len(l)][source]
         if (not bad and sum < min):
             id = l
+            id.append(source)
+            id.insert(0, source)
             min = sum
     return id,min
 

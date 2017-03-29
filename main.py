@@ -1,7 +1,7 @@
 import networkx as nx
-from g import *
 from time import *
-import networkx as nx
+
+from g import *
 
 """Manage tags"""
 
@@ -157,10 +157,11 @@ def bancDeTestOpti_Random():
     matrice = dijtraAllG(G)
 
     t_start = time()
-    id,min=TSV(G,matrice)
+    id, min = TSV(G, matrice, 0)
     t_stop = time()
 
     print t_stop - t_start
     print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
+
 
 bancDeTestOpti_Random()
