@@ -61,8 +61,8 @@ def dijtraAllG(G,weight='weight'):
     return chemins
 
 
-def TSV(G):
-    df = dijtraAllG(G)
+def TSV(G,df):
+
     ar = list(itertools.permutations(df, len(G.node)))
     min = pow(10, 99)
     id = 0
@@ -79,11 +79,12 @@ def TSV(G):
         if (not bad and sum < min):
             id = l
             min = sum
-    print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
+    return id,min
 
 
-G = genRandomGraph(11, 12)
 
-TSV(G)
+#G = genRandomGraph(11, 12)
 
-displayGraph(G)
+#TSV(G)
+
+#displayGraph(G)

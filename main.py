@@ -1,5 +1,7 @@
 import networkx as nx
 from g import *
+from time import *
+import networkx as nx
 
 """Manage tags"""
 
@@ -83,27 +85,32 @@ def load(path):
                 k += 1
             edges.append([node_lien[0] ,n ,value ])
 
+
     G = nx.Graph()
 
     for n in nodes.split(","):
-        G.add_node(n)
+        G.add_node(int(n))
 
     for e in edges:
 
-        G.add_edge(e[0], e[1], weight=e[2])
+        G.add_edge(int(e[0]), int(e[1]), weight=int(e[2]))
 
 
     return G  # displayGraph(g)
+
 def treateMatrice(matrix, d):
     nbNodeOK = 0
     nbNode = len(matrix) - 1
+    sum=0
     chemin = [d]
     while (nbNodeOK != nbNode):
         index = minimal(matrix[chemin[-1]], chemin)
+        sum+=matrix[chemin[-1]][index]
         chemin.append(index)
         nbNodeOK += 1
     chemin.append(d)
-    return chemin
+    sum+=matrix[chemin[-1]][d]
+    return chemin,sum
 
 
 def minimal(tab, chemin):
@@ -116,4 +123,44 @@ def minimal(tab, chemin):
     return index
 
 
-displayGraph(load("Graph/JeuDeTest/test10.txt"))
+
+def bancDeTestSimple_Fichier():
+
+    G = load("Graph/JeuDeTest/test10.txt")
+    matrice = dijtraAllG(G)
+
+
+    t_start = time()
+    chemin,val=treateMatrice(matrice,1)
+    t_stop= time()
+
+    print t_stop-t_start
+    print("Le plus court est "+str(chemin) +"et sa valeur est "+str(val))
+
+
+def bancDeTestSimple_Random():
+
+    G = genRandomGraph(100,200)
+    matrice = dijtraAllG(G)
+
+
+    t_start = time()
+    chemin,val=treateMatrice(matrice,1)
+    t_stop= time()
+
+    print t_stop-t_start
+    print("Le plus court est "+str(chemin) +"et sa valeur est "+str(val))
+
+
+def bancDeTestOpti_Random():
+    G = genRandomGraph(11, 20)
+    matrice = dijtraAllG(G)
+
+    t_start = time()
+    id,min=TSV(G,matrice)
+    t_stop = time()
+
+    print t_stop - t_start
+    print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
+
+bancDeTestOpti_Random()
