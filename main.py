@@ -131,7 +131,7 @@ def bancDeTestSimple_Fichier():
 
 
     t_start = time()
-    chemin,val=treateMatrice(matrice,1)
+    chemin,val=treateMatrice(matrice,0)
     t_stop= time()
 
     print t_stop-t_start
@@ -164,4 +164,22 @@ def bancDeTestOpti_Random():
     print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
 
 
-bancDeTestOpti_Random()
+def bancDeTestOpti_Fich():
+    G = load("Graph/JeuDeTest/test10.txt")
+    matrice = dijtraAllG(G)
+
+    t_start = time()
+    id, min = TSV(G, matrice, 0)
+    t_stop = time()
+
+    print t_stop - t_start
+    print("Le plus court est " + str(id) + " et sa valeur est " + str(min))
+
+def afficheGraphTest():
+    G = load("Graph/JeuDeTest/test10.txt")
+    displayGraph(G)
+"""
+bancDeTestSimple_Fichier()
+bancDeTestOpti_Fich()
+"""
+afficheGraphTest()
